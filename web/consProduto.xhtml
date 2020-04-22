@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <h1>Pesquisar Produto</h1>
+            <h:panelGrid>
+                <h:commandButton value="Novo" action="#{produtoMbean.botaoNovo()}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                Nome <h:inputText size="20" value="#{produtoMbean.parametroPesquisa}"/>
+                <h:commandButton value="Pesquisar" action="#{produtoMbean.botaoPesquisar()}"/>
+            </h:panelGrid>
+            <h:panelGrid>
+                <h:dataTable  value="#{produtoMbean.listaProdutos}" var="produto"
+                              styleClass="tabela"
+                              headerClass="tabelaCabecalho"
+                              columnClasses="tabelaColunaId, tabelaColuna250px, tabelaColunaNumerica, tabelaColunaAcoes"
+                              rowClasses="tabelaLinha1,tabelaLinha2">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{produto.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Nome</f:facet>
+                            #{produto.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Preço</f:facet>
+                        #{produto.precoVenda}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ações</f:facet>
+                        <h:commandButton value="Editar" action="#{produtoMbean.botaoEditar()}">
+                            <f:setPropertyActionListener value="#{produto}" target="#{produtoMbean.produto}"/>
+                        </h:commandButton>
+                        <h:commandButton value="Apagar" action="#{produtoMbean.botaoExcluir()}"> 
+                            <f:setPropertyActionListener value="#{produto}" target="#{produtoMbean.produto}"/>
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

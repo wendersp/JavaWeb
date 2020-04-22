@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <h1>Pesquisar Unidade de Medida</h1>
+            <h:panelGrid>
+                <h:commandButton value="Novo" action="cadUnidadeMedida"/>
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                Nome <h:inputText size="20" value="#{unidadeMedidaMbean.parametroPesquisa}"/>
+                <h:commandButton value="Pesquisar" action="#{unidadeMedidaMbean.botaoPesquisar()}"/>
+            </h:panelGrid>
+            <h:panelGrid>
+                <h:dataTable  value="#{unidadeMedidaMbean.listaUnidadeMedidas}" var="unidadeMedida"
+                              styleClass="tabela"
+                              headerClass="tabelaCabecalho"
+                              columnClasses="tabelaColunaId, tabelaColuna250px, tabelaColunaNumerica, tabelaColunaAcoes"
+                              rowClasses="tabelaLinha1,tabelaLinha2">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{unidadeMedida.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Nome</f:facet>
+                            #{unidadeMedida.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Símbolo</f:facet>
+                        <h:outputText value="#{unidadeMedida.simbolo}">
+                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Ações</f:facet>
+                        <h:commandButton value="Editar" action="#{unidadeMedidaMbean.botaoEditar()}">
+                            <f:setPropertyActionListener value="#{unidadeMedida}" target="#{unidadeMedidaMbean.unidadeMedida}"/>
+                        </h:commandButton>
+                        <h:commandButton value="Apagar" action="#{unidadeMedidaMbean.botaoExcluir()}"> 
+                            <f:setPropertyActionListener value="#{unidadeMedida}" target="#{unidadeMedidaMbean.unidadeMedida}"/>
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
