@@ -9,13 +9,14 @@ import entidade.UnidadeMedida;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import sessionbean.UnidadeMedidaSBean;
 
 /**
  *
  * @author wender
  */
-//@FacesConverter("unidadeMedidaConverter")
+@FacesConverter("unidadeMedidaConverter")
 public class UnidadeMedidaConverter implements Converter {
 
     private UnidadeMedidaSBean unidadeMedidaSBean;

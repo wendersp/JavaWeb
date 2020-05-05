@@ -16,6 +16,7 @@
                 Nome <h:inputText size="20" value="#{produtoMbean.parametroPesquisa}"/>
                 <h:commandButton value="Pesquisar" action="#{produtoMbean.botaoPesquisar()}"/>
             </h:panelGrid>
+            
             <h:panelGrid>
                 <h:dataTable  value="#{produtoMbean.listaProdutos}" var="produto"
                               styleClass="tabela"
@@ -31,9 +32,35 @@
                             #{produto.nome}
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Preço</f:facet>
-                        #{produto.precoVenda}
+                        <f:facet name="header">Unidade de Medida</f:facet>
+                        #{produto.unidadeMedida.nome}
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">Estoque</f:facet>
+                        <h:outputText value="#{produto.estoque}">
+                            <f:convertNumber pattern="#,##0.000" locale="pt_BR"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Custo</f:facet>
+                        <h:outputText value="#{produto.precoCusto}">                            
+                            <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Margem Lucro</f:facet>
+                        <h:outputText value="#{produto.margemLucro}">                            
+                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Preço</f:facet>
+                        <h:outputText value="#{produto.precoVenda}">                            
+                            <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+                        </h:outputText>
+                    </h:column>
+                    
+                    
                     <h:column>
                         <f:facet name="header">Ações</f:facet>
                         <h:commandButton value="Editar" action="#{produtoMbean.botaoEditar()}">

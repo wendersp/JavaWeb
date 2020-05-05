@@ -22,8 +22,7 @@ public class ProdutoSBean {
     @PersistenceContext(unitName = "JavaWebPU")
     private EntityManager em;
     
-    public void salvar(Produto produto) {
-        System.out.println("Salvar produto sbean " + produto.getNome() );
+    public void salvar(Produto produto) {        
         em.merge(produto);
     }
     
@@ -40,7 +39,6 @@ public class ProdutoSBean {
         Query consulta = em.createNamedQuery("Produto.findByNome");
         consulta.setParameter("nome", valorPesquisa + "%");
         listaProduto = consulta.getResultList();
-        System.out.println("Lista produtos : " + listaProduto.size());
         return listaProduto;
     }
 }

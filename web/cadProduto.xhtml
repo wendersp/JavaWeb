@@ -9,7 +9,9 @@
 
     <ui:define name="content">
         <h1>Cadastro de Produto</h1>
-        <h:form id="form">
+        <br/>
+        
+        <h:form id="form">            
             <h:panelGrid columns="2">
                 Nome
                 <h:inputText id="iTxtNome" size="50" value="#{produtoMbean.produto.nome}"/>
@@ -19,13 +21,21 @@
                                    itemValue="#{unidadeMedida}"  itemLabel="#{unidadeMedida.nome}"/>                    
                 </h:selectOneMenu>
                 Estoque
-                <h:inputText id="iTxtEstoque" size="10" value="#{produtoMbean.produto.estoque}"/>
+                <h:inputText id="iTxtEstoque" size="10" value="#{produtoMbean.produto.estoque}">                    
+                            <f:convertNumber pattern="#,##0.000" locale="pt_BR"/>
+                </h:inputText>
                 Preço de Custo                
-                <h:inputText id="iTxtPrecoCusto"  size="10" value="#{produtoMbean.produto.precoCusto}"/>
+                <h:inputText id="iTxtPrecoCusto"  size="10" value="#{produtoMbean.produto.precoCusto}">                                        
+                            <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+                </h:inputText>
                 Margem de Lucro %
-                <h:inputText id="iTxtMargemLucro" size="10" value="#{produtoMbean.produto.margemLucro}"/>                                                                                                              
+                <h:inputText id="iTxtMargemLucro" size="10" value="#{produtoMbean.produto.margemLucro}">                    
+                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                </h:inputText>
                 Preço de Venda
-                <h:inputText id="iTxtPrecoVenda" size="10" value="#{produtoMbean.produto.precoVenda}"/>                          
+                <h:inputText id="iTxtPrecoVenda" size="10" value="#{produtoMbean.produto.precoVenda}">                    
+                            <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+                </h:inputText>
             </h:panelGrid>            
             <h:commandButton id="cBtnSalvar" value="Salvar"  action="#{produtoMbean.botaoSalvar()}" />                                         
         </h:form>
