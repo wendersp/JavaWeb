@@ -9,19 +9,22 @@
     <ui:define name="content">
         <h:form>
             <h1>Pesquisar Produto</h1>
+            <h:messages errorClass="msgErro" infoClass="msgInfo" />
             <h:panelGrid>
                 <h:commandButton value="Novo" action="#{produtoMbean.botaoNovo()}"/>
             </h:panelGrid>
             <h:panelGrid columns="3">
-                Nome <h:inputText size="20" value="#{produtoMbean.parametroPesquisa}"/>
+                Nome <h:inputText id="iTxtParametroPesquisar" size="20" value="#{produtoMbean.parametroPesquisa}"> 
+                    <f:ajax listener="#{produtoMbean.botaoPesquisar()}"  execute="iTxtParametroPesquisar" render="dtProduto" event="keyup"/>
+                </h:inputText>
                 <h:commandButton value="Pesquisar" action="#{produtoMbean.botaoPesquisar()}"/>
             </h:panelGrid>
             
             <h:panelGrid>
-                <h:dataTable  value="#{produtoMbean.listaProdutos}" var="produto"
+                <h:dataTable id="dtProduto"  value="#{produtoMbean.listaProdutos}" var="produto"
                               styleClass="tabela"
                               headerClass="tabelaCabecalho"
-                              columnClasses="tabelaColunaId, tabelaColuna250px, tabelaColunaNumerica, tabelaColunaAcoes"
+                              columnClasses="tabelaColunaId, tabelaColuna250px, tabelaColuna150px, tabelaColunaAcoes"
                               rowClasses="tabelaLinha1,tabelaLinha2">
                     <h:column>
                         <f:facet name="header">ID</f:facet>

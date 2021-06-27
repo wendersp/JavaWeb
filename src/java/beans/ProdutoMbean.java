@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import entidade.Produto;
@@ -10,14 +5,16 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import sessionbean.ProdutoSBean;
 import entidade.UnidadeMedida;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import sessionbean.UnidadeMedidaSBean;
 import uteis.jsf.UnidadeMedidaConverter;
+import uteis.jsf.UteisJsf;
 
 /**
  *
@@ -36,7 +33,7 @@ public class ProdutoMbean implements Serializable {
     private String parametroPesquisa;
     private List<Produto> listaProdutos;
     private List<UnidadeMedida> listaUnidadeMedida;
-    
+
     private UnidadeMedidaConverter unidadeMedidaConverter;
 
     public ProdutoMbean() {
@@ -47,17 +44,64 @@ public class ProdutoMbean implements Serializable {
     public void init() {
         parametroPesquisa = "";
         produto = new Produto();
-        listaProdutos = new ArrayList<>();        
+        listaProdutos = new ArrayList<>();
     }
-    
+
     private void inicioFormularioCadastro() {
-        listaUnidadeMedida = unidadeMedidaSBean.pesquisar("");
-        unidadeMedidaConverter = new UnidadeMedidaConverter();
-        unidadeMedidaConverter.setUnidadeMedidaSBean(unidadeMedidaSBean);
+        try {
+            listaUnidadeMedida = unidadeMedidaSBean.pesquisar("");
+            unidadeMedidaConverter = new UnidadeMedidaConverter();
+            unidadeMedidaConverter.setUnidadeMedidaSBean(unidadeMedidaSBean);
+        } catch (Exception ex) {
+            UteisJsf.addMensagemErro(ex.getMessage(), "");
+        }
+    }
+
+    public void calcularPrecoVenda() {
+        //precoVenda = ((margem/100)*precoCusto)+precoCusto  
+        try {
+            if (produto.getPrecoCusto() != null && produto.getMargemLucro() != null) {
+                produto.setPrecoVenda(
+                        produto.getMargemLucro().divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP)
+                                .multiply(produto.getPrecoCusto())
+                                .add(produto.getPrecoCusto()));
+            } else {
+                produto.setPrecoVenda(null);
+            }
+        } catch (NullPointerException ex) {
+            UteisJsf.addMensagemErro("Erro ao calcular o preço de venda.", ex.getMessage());
+        } catch (Exception ex) {
+             UteisJsf.addMensagemErro("Erro ao calcular o preço de venda.", ex.getMessage());
+        }
+    }
+
+    public void calcularMargemLucro() {
+        //margem = ((precoVenda-custo)/custo)*100  
+        try {
+            if (produto.getPrecoCusto() != null && produto.getPrecoVenda() != null) {
+                produto.setMargemLucro(produto.getPrecoVenda().subtract(produto.getPrecoCusto())
+                        .divide(produto.getPrecoCusto(), 4, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100)));
+            } else {
+                produto.setMargemLucro(null);
+            }
+        } catch (NullPointerException ex) {
+            UteisJsf.addMensagemErro("Erro ao calcular a margem de lucro.", ex.getMessage());
+        }catch (Exception ex) {
+             UteisJsf.addMensagemErro("Erro ao calcular o preço de venda.", ex.getMessage());
+        }
+
     }
 
     public void botaoPesquisar() {
-        listaProdutos = produtoSBean.pesquisar(parametroPesquisa);
+        try {
+            listaProdutos = produtoSBean.pesquisar(parametroPesquisa.toUpperCase());
+        } catch (Exception ex) {
+            UteisJsf.addMensagemErro(ex.getMessage(), "");
+        }
+    }
+
+    public String botaoNavPesquisar() {
+        return "consProduto?faces-redirect=true";
     }
 
     public String botaoNovo() {
@@ -66,10 +110,15 @@ public class ProdutoMbean implements Serializable {
         return "cadProduto?faces-redirect=true";
     }
 
-    public String botaoSalvar() {
-        produtoSBean.salvar(produto);
-        produto = new Produto();
-        return "consProduto?faces-redirect=true";
+    public void botaoSalvar() {
+        try {
+            produtoSBean.salvar(produto);
+            produto = new Produto();
+            UteisJsf.addMensagemInfo("O produto foi salvo com sucesso.", "");
+        } catch (Exception ex) {
+            UteisJsf.addMensagemErro(ex.getMessage(), "");
+        }
+
     }
 
     public String botaoEditar() {
@@ -78,8 +127,13 @@ public class ProdutoMbean implements Serializable {
     }
 
     public void botaoExcluir() {
-        produtoSBean.excluir(produto);
-        produto = new Produto();
+        try {
+            produtoSBean.excluir(produto);
+            produto = new Produto();
+            UteisJsf.addMensagemInfo("O produto foi apagado com sucesso.", "");
+        } catch (Exception ex) {
+            UteisJsf.addMensagemErro(ex.getMessage(), "");
+        }
     }
 
     public Produto getProduto() {
@@ -121,6 +175,5 @@ public class ProdutoMbean implements Serializable {
     public void setUnidadeMedidaConverter(UnidadeMedidaConverter unidadeMedidaConverter) {
         this.unidadeMedidaConverter = unidadeMedidaConverter;
     }
-    
 
 }

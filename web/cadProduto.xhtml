@@ -8,9 +8,10 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="content">
+        
         <h1>Cadastro de Produto</h1>
         <br/>
-        
+        <h:messages showDetail="ture" errorClass="msgErro" infoClass="msgInfo"  />
         <h:form id="form">            
             <h:panelGrid columns="2">
                 Nome
@@ -22,22 +23,31 @@
                 </h:selectOneMenu>
                 Estoque
                 <h:inputText id="iTxtEstoque" size="10" value="#{produtoMbean.produto.estoque}">                    
-                            <f:convertNumber pattern="#,##0.000" locale="pt_BR"/>
+                    <f:convertNumber pattern="#,##0.000" locale="pt_BR"/>
                 </h:inputText>
                 Preço de Custo                
                 <h:inputText id="iTxtPrecoCusto"  size="10" value="#{produtoMbean.produto.precoCusto}">                                        
-                            <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
+                    <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
                 </h:inputText>
                 Margem de Lucro %
                 <h:inputText id="iTxtMargemLucro" size="10" value="#{produtoMbean.produto.margemLucro}">                    
-                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                    <f:convertNumber pattern="#0.00" locale="pt_BR"/>
+                    <f:ajax listener="#{produtoMbean.calcularPrecoVenda()}"  execute="@all" render="@all" event="blur"/>
                 </h:inputText>
-                Preço de Venda
-                <h:inputText id="iTxtPrecoVenda" size="10" value="#{produtoMbean.produto.precoVenda}">                    
-                            <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>
-                </h:inputText>
+                Preço de Venda      
+                <h:panelGroup>
+                    <h:inputText id="iTxtPrecoVenda" size="10" value="#{produtoMbean.produto.precoVenda}">                    
+                        <f:convertNumber pattern="#,##0.00" locale="pt_BR"/>                      
+                    </h:inputText>
+                    <h:commandButton id="cBtnAjustarMargem" value="Ajustar Margem">
+                        <f:ajax listener="#{produtoMbean.calcularMargemLucro()}"  execute="@all" render="@all" event="click"/>    
+                    </h:commandButton>
+                </h:panelGroup>
             </h:panelGrid>            
-            <h:commandButton id="cBtnSalvar" value="Salvar"  action="#{produtoMbean.botaoSalvar()}" />                                         
+            <h:commandButton id="cBtnSalvar" value="Salvar"  action="#{produtoMbean.botaoSalvar()}" />   
+            <h:commandButton id="cBtnPesquisar" value="Pesquisar"  action="#{produtoMbean.botaoNavPesquisar()}" />                                         
         </h:form>
+        
+        
     </ui:define>
 </ui:composition>

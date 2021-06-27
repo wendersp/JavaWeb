@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sessionbean;
 
 import entidade.UnidadeMedida;
@@ -17,28 +12,44 @@ import javax.persistence.Query;
  * @author wender
  */
 @Stateless
-public class UnidadeMedidaSBean  {
+public class UnidadeMedidaSBean {
 
     @PersistenceContext(unitName = "JavaWebPU")
     private EntityManager em;
-    
-    public void salvar(UnidadeMedida unidadeMedida) {
-        em.merge(unidadeMedida);
+
+    public void salvar(UnidadeMedida unidadeMedida) throws Exception {
+        try {
+            em.merge(unidadeMedida);
+        } catch (Exception ex) {
+            throw new Exception("Ouve um error ao Salvar Unidade de Mendida");
+        }
     }
-    
-    public void excluir(UnidadeMedida unidadeMedida) {
-        em.remove(em.find(UnidadeMedida.class, unidadeMedida.getId()));
+
+    public void excluir(UnidadeMedida unidadeMedida) throws Exception {
+        try {
+            em.remove(em.find(UnidadeMedida.class, unidadeMedida.getId()));
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao excluir a Unidade de Medidas.");
+        }
     }
-    
-    public UnidadeMedida pesquisar(Long id) {
-        return em.find(UnidadeMedida.class, id);        
+
+    public UnidadeMedida pesquisar(Long id) throws Exception {
+        try {
+            return em.find(UnidadeMedida.class, id);
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao pesquisar a Unidade de Medidas.");
+        }
     }
-    
-    public List<UnidadeMedida> pesquisar(String valorPesquisa) {
-        List<UnidadeMedida> listaUnidadeMedida;
-        Query consulta = em.createNamedQuery("UnidadeMedida.findByNome");
-        consulta.setParameter("nome", valorPesquisa + "%");
-        listaUnidadeMedida = consulta.getResultList();
-        return listaUnidadeMedida;
+
+    public List<UnidadeMedida> pesquisar(String valorPesquisa) throws Exception {
+        try {
+            List<UnidadeMedida> listaUnidadeMedida;
+            Query consulta = em.createNamedQuery("UnidadeMedida.findByNome");
+            consulta.setParameter("nome", valorPesquisa + "%");
+            listaUnidadeMedida = consulta.getResultList();
+            return listaUnidadeMedida;
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao pesquisar a Unidade de Medidas.");
+        }
     }
 }

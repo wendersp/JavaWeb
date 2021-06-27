@@ -8,44 +8,39 @@
 
     <ui:define name="content">
         <h:form>
-            <h1>Pesquisar Unidade de Medida</h1>
+            <h1>Pesquisar Perfil do Usuario</h1>
             <h:messages errorClass="msgErro" infoClass="msgInfo" />
             <h:panelGrid>
-                <h:commandButton value="Novo" action="#{unidadeMedidaMbean.botaoNovo()}"/>
+                <h:commandButton value="Novo" action="#{perfilUsuarioMbean.botaoNovo()}"/>
             </h:panelGrid>
             <h:panelGrid columns="3">
-                Nome <h:inputText id="iTxtParametroPesquisar" size="20" value="#{unidadeMedidaMbean.parametroPesquisa}"> 
-                    <f:ajax listener="#{unidadeMedidaMbean.botaoPesquisar()}"  execute="iTxtParametroPesquisar" render="dtUnidadeMedida" event="keyup"/>
+                Nome <h:inputText id="iTxtParametroPesquisar" size="20" value="#{perfilUsuarioMbean.parametroPesquisa}"> 
+                    <f:ajax listener="#{perfilUsuarioMbean.botaoPesquisar()}"  execute="iTxtParametroPesquisar" render="dtPerfilUsuario" event="keyup"/>
                 </h:inputText>
-                <h:commandButton value="Pesquisar" action="#{unidadeMedidaMbean.botaoPesquisar()}"/>
+                <h:commandButton value="Pesquisar" action="#{perfilUsuarioMbean.botaoPesquisar()}"/>
             </h:panelGrid>
             <h:panelGrid>
-                <h:dataTable id="dtUnidadeMedida" value="#{unidadeMedidaMbean.listaUnidadeMedidas}" var="unidadeMedida"
+                <h:dataTable id="dtPerfilUsuario" value="#{perfilUsuarioMbean.listaPerfilUsuarios}" var="perfilUsuario"
                              styleClass="tabela"
                              headerClass="tabelaCabecalho"
                              columnClasses="tabelaColunaId, tabelaColuna250px, tabelaColunaNumerica, tabelaColunaAcoes"
                              rowClasses="tabelaLinha1,tabelaLinha2">
                     <h:column>
                         <f:facet name="header">ID</f:facet>
-                            #{unidadeMedida.id}
+                            #{perfilUsuario.id}
                     </h:column>
                     <h:column>
                         <f:facet name="header">Nome</f:facet>
-                            #{unidadeMedida.nome}
+                            #{perfilUsuario.nome}
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">Símbolo</f:facet>
-                        <h:outputText value="#{unidadeMedida.simbolo}">
-                            <f:convertNumber pattern="#0.00" locale="pt_BR"/>
-                        </h:outputText>
-                    </h:column>
+                   
                     <h:column>
                         <f:facet name="header">Ações</f:facet>
-                        <h:commandButton value="Editar" action="#{unidadeMedidaMbean.botaoEditar()}">
-                            <f:setPropertyActionListener value="#{unidadeMedida}" target="#{unidadeMedidaMbean.unidadeMedida}"/>
+                        <h:commandButton value="Editar" action="#{perfilUsuarioMbean.botaoEditar()}">
+                            <f:setPropertyActionListener value="#{perfilUsuario}" target="#{perfilUsuarioMbean.perfilUsuario}"/>
                         </h:commandButton>
-                        <h:commandButton value="Apagar" action="#{unidadeMedidaMbean.botaoExcluir()}"> 
-                            <f:setPropertyActionListener value="#{unidadeMedida}" target="#{unidadeMedidaMbean.unidadeMedida}"/>
+                        <h:commandButton value="Apagar" action="#{perfilUsuarioMbean.botaoExcluir()}"> 
+                            <f:setPropertyActionListener value="#{perfilUsuario}" target="#{perfilUsuarioMbean.perfilUsuario}"/>
                         </h:commandButton>
                     </h:column>
                 </h:dataTable>

@@ -7,44 +7,44 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import sessionbean.UnidadeMedidaSBean;
-import entidade.UnidadeMedida;
+import sessionbean.PerfilUsuarioSBean;
+import entidade.PerfilUsuario;
 import uteis.jsf.UteisJsf;
 
 /**
  *
  * @author wender
  */
-@Named(value = "unidadeMedidaMbean")
+@Named(value = "perfilUsuarioMbean")
 @SessionScoped
-public class UnidadeMedidaMbean implements Serializable {
+public class PerfilUsuarioMbean implements Serializable {
 
-    private UnidadeMedida unidadeMedida;
+    private PerfilUsuario perfilUsuario;
     private String parametroPesquisa;
-    private List<UnidadeMedida> listaUnidadeMedidas;
+    private List<PerfilUsuario> listaPerfilUsuarios;
 
     @EJB
-    private UnidadeMedidaSBean unidadeMedidaSBean;
+    private PerfilUsuarioSBean perfilUsuarioSBean;
 
-    public UnidadeMedidaMbean() {
+    public PerfilUsuarioMbean() {
 
     }
 
     @PostConstruct
     public void init() {
-        unidadeMedida = new UnidadeMedida();
-        listaUnidadeMedidas = new ArrayList<>();
+        perfilUsuario = new PerfilUsuario();
+        listaPerfilUsuarios = new ArrayList<>();
 
     }
 
     public String botaoNovo() {
-        unidadeMedida = new UnidadeMedida();
-        return "cadUnidadeMedida";
+        perfilUsuario = new PerfilUsuario();
+        return "cadPerfilUsuario";
     }
     
     public void botaoPesquisar() {
         try {
-            listaUnidadeMedidas = unidadeMedidaSBean.pesquisar(parametroPesquisa.toUpperCase());
+            listaPerfilUsuarios = perfilUsuarioSBean.pesquisar(parametroPesquisa.toUpperCase());
         } catch (Exception ex) {
             UteisJsf.addMensagemErro(ex.getMessage(), "");
         }
@@ -52,8 +52,8 @@ public class UnidadeMedidaMbean implements Serializable {
 
     public void botaoSalvar() {
         try {
-            unidadeMedidaSBean.salvar(unidadeMedida);
-            unidadeMedida = new UnidadeMedida();
+            perfilUsuarioSBean.salvar(perfilUsuario);
+            perfilUsuario = new PerfilUsuario();
             UteisJsf.addMensagemInfo("Unidade de Medida salva com sucesso.", "");
         } catch (Exception ex) {
             UteisJsf.addMensagemErro(ex.getMessage(), "");
@@ -61,18 +61,18 @@ public class UnidadeMedidaMbean implements Serializable {
     }
 
     public String botaoNavPesquisar() {
-        return "consUnidadeMedida?faces-redirect=true";
+        return "consPerfilUsuario?faces-redirect=true";
     }
 
     public String botaoEditar() {
 
-        return "cadUnidadeMedida?faces-redirect=true";
+        return "cadPerfilUsuario?faces-redirect=true";
     }
 
     public void botaoExcluir() {
         try {
-            unidadeMedidaSBean.excluir(unidadeMedida);
-            unidadeMedida = new UnidadeMedida();
+            perfilUsuarioSBean.excluir(perfilUsuario);
+            perfilUsuario = new PerfilUsuario();
             UteisJsf.addMensagemInfo("Unidade de Medida apagada com sucesso.", "");
         } catch (Exception ex) {
             UteisJsf.addMensagemErro(ex.getMessage(), "");
@@ -80,12 +80,12 @@ public class UnidadeMedidaMbean implements Serializable {
 
     }
 
-    public UnidadeMedida getUnidadeMedida() {
-        return unidadeMedida;
+    public PerfilUsuario getPerfilUsuario() {
+        return perfilUsuario;
     }
 
-    public void setUnidadeMedida(UnidadeMedida unidadeMedida) {
-        this.unidadeMedida = unidadeMedida;
+    public void setPerfilUsuario(PerfilUsuario perfilUsuario) {
+        this.perfilUsuario = perfilUsuario;
     }
 
     public String getParametroPesquisa() {
@@ -96,12 +96,12 @@ public class UnidadeMedidaMbean implements Serializable {
         this.parametroPesquisa = parametroPesquisa;
     }
 
-    public List getListaUnidadeMedidas() {
-        return listaUnidadeMedidas;
+    public List getListaPerfilUsuarios() {
+        return listaPerfilUsuarios;
     }
 
-    public void setListaUnidadeMedidas(List listaUnidadeMedidas) {
-        this.listaUnidadeMedidas = listaUnidadeMedidas;
+    public void setListaPerfilUsuarios(List listaPerfilUsuarios) {
+        this.listaPerfilUsuarios = listaPerfilUsuarios;
     }
 
 }

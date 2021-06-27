@@ -15,14 +15,14 @@ import javax.persistence.Table;
  * @author wender
  */
 @Entity
-@Table(name = "unidade_medida", schema = "javaweb")
+@Table(name = "perfil_usuario", schema = "javaweb")
 @NamedQueries({
     @NamedQuery(
-            name = "UnidadeMedida.findByNome",
-            query =  "SELECT u FROM UnidadeMedida u WHERE u.nome LIKE :nome ORDER BY u.nome"
+            name = "PerfilUsuario.findByNome",
+            query =  "SELECT p FROM PerfilUsuario p WHERE p.nome LIKE :nome ORDER BY p.nome"
     )
 })
-public class UnidadeMedida implements Serializable {
+public class PerfilUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -30,8 +30,6 @@ public class UnidadeMedida implements Serializable {
     private Long id;
     @Column(name = "nome", length = 30, nullable = false)
     private String nome;
-    @Column(name = "simbolo", length = 3, nullable = false, unique = true)
-    private String simbolo;
     
 
     public Long getId() {
@@ -50,16 +48,7 @@ public class UnidadeMedida implements Serializable {
         this.nome = nome.toUpperCase();
     }
 
-    public String getSimbolo() {
-        return simbolo;
-    }
-
-    public void setSimbolo(String simbolo) {
-        this.simbolo = simbolo.toUpperCase();
-    }
-
-    
-    
+      
     
     @Override
     public int hashCode() {
@@ -71,10 +60,10 @@ public class UnidadeMedida implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UnidadeMedida)) {
+        if (!(object instanceof PerfilUsuario)) {
             return false;
         }
-        UnidadeMedida other = (UnidadeMedida) object;
+        PerfilUsuario other = (PerfilUsuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -83,7 +72,7 @@ public class UnidadeMedida implements Serializable {
 
     @Override
     public String toString() {
-        return "entidade.UnidadeMedida[ id=" + id + " ]";
+        return "entidade.PerfilUsuario[ id=" + id + " ]";
     }
     
 }

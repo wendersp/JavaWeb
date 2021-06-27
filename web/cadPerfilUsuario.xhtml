@@ -7,18 +7,15 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h1>Cadastro de Unidade de Medida</h1>
+        <h1>Cadastro do Perfil do Usuario</h1>
         <h:messages errorClass="msgErro" infoClass="msgInfo" />
         <h:form id="form">
             <h:panelGrid columns="2">
                 Nome
-                <h:inputText id="iTxtNome" size="50" maxlength="30" value="#{unidadeMedidaMbean.unidadeMedida.nome}"/>                
-                Simbolo
-                <h:inputText id="iTxtEstoque" size="10" maxlength="3" value="#{unidadeMedidaMbean.unidadeMedida.simbolo}"/>                    
-                
+                <h:inputText id="iTxtNome" size="50" maxlength="30" value="#{perfilUsuarioMbean.perfilUsuario.nome}"/>                                               
             </h:panelGrid>            
-            <h:commandButton value="Salvar" action="#{unidadeMedidaMbean.botaoSalvar()}" />
-            <h:commandButton value="Pesquisar" action="#{unidadeMedidaMbean.botaoNavPesquisar()}" />
+            <h:commandButton value="Salvar" action="#{perfilUsuarioMbean.botaoSalvar()}" />
+            <h:commandButton value="Pesquisar" action="#{perfilUsuarioMbean.botaoNavPesquisar()}" />
         </h:form>
 
 

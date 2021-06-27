@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sessionbean;
 
 import entidade.Produto;
@@ -21,24 +16,40 @@ public class ProdutoSBean {
 
     @PersistenceContext(unitName = "JavaWebPU")
     private EntityManager em;
-    
-    public void salvar(Produto produto) {        
-        em.merge(produto);
+
+    public void salvar(Produto produto) throws Exception {
+        try {
+            em.merge(produto);
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao salvar o Produto.");
+        }
     }
-    
-    public void excluir(Produto produto) {
-        em.remove(em.find(Produto.class, produto.getId()));
+
+    public void excluir(Produto produto) throws Exception {
+        try {
+            em.remove(em.find(Produto.class, produto.getId()));
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao apagar o Produto.");
+        }
     }
-    
-    public Produto pesquisar(Long id) {
-        return em.find(Produto.class, id);        
+
+    public Produto pesquisar(Long id) throws Exception {
+        try {
+            return em.find(Produto.class, id);
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao pesquisar o Produto.");
+        }
     }
-    
-    public List<Produto> pesquisar(String valorPesquisa) {
-        List<Produto> listaProduto;
-        Query consulta = em.createNamedQuery("Produto.findByNome");
-        consulta.setParameter("nome", valorPesquisa + "%");
-        listaProduto = consulta.getResultList();
-        return listaProduto;
+
+    public List<Produto> pesquisar(String valorPesquisa) throws Exception {
+        try {
+            List<Produto> listaProduto;
+            Query consulta = em.createNamedQuery("Produto.findByNome");
+            consulta.setParameter("nome", valorPesquisa + "%");
+            listaProduto = consulta.getResultList();
+            return listaProduto;
+        } catch (Exception ex) {
+            throw new Exception("Ouve um erro ao pesquisar o Produto.");
+        }
     }
 }

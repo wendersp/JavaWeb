@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uteis.jsf;
 
 import entidade.UnidadeMedida;
@@ -24,10 +19,12 @@ public class UnidadeMedidaConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-
+        
         if (value != null && value.trim().length() > 0) {
             Long id = Long.parseLong(value);
+            try {
             unidadeMedida = unidadeMedidaSBean.pesquisar(id);
+            } catch(Exception ex){}
         }
         return unidadeMedida;
     }

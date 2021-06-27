@@ -64,9 +64,21 @@ a:link:hover, a:visited:hover  {
 }
 
 .tabelaLinha1 {
-    background: burlywood;
+    background: #c2dfef;
 }
 
 .tabelaLinha2 {
-    background: aliceblue;
+    background: #dddddd;
+}
+
+.msgErro {
+    color: red;
+    font: 14px Arial, sans-serif;
+    font-weight: bold;
+}
+
+.msgInfo {
+    color: blue;
+    font: 14px Arial, sans-serif;
+    font-weight: bold;
 }
